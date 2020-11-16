@@ -1,0 +1,1 @@
+We have setup a working game, but would like to setup features such as making a piece king when it reaches the otherside.
