@@ -29,7 +29,7 @@ public class Checkers extends Application {
     static Group tiles = new Group();
     static Group pieces = new Group();
 
-    /*
+    /**
      * Creates the Game Board Window and sets up the PlayPieces
      */
     private Parent createBoard() {
@@ -47,7 +47,7 @@ public class Checkers extends Application {
     
  
     @Override
-    /*
+    /**
      * Sets up the game
      * @param primaryStage is the stage for the window
      */
@@ -58,7 +58,7 @@ public class Checkers extends Application {
         primaryStage.show();
     }
     
-    /*
+    /**
      * Performs a pieceAction as long as the current piece selected is not the previousPieceType
      * @return boolean whether an attack was made.
      */
@@ -83,7 +83,7 @@ public class Checkers extends Application {
     }
 
 
-    /*
+    /**
      * Launches the Checkers Game
      */
     public static void main(String[] args) {
