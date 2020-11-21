@@ -1,5 +1,9 @@
 package application;
-
+/**
+ * Represents a Checkers Game
+ * @author Nick Feibel, Ember Ipek
+ * @version 1.0
+ */
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Parent;
@@ -79,7 +83,9 @@ public class Checkers extends Application {
     }
 
 
-
+    /*
+     * Launches the Checkers Game
+     */
     public static void main(String[] args) {
         launch(args);
     }
