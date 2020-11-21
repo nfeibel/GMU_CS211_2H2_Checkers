@@ -1,5 +1,9 @@
 package application;
-
+/**
+ * Represents the Types of Pieces
+ * @author Nick Feibel, Ember Ipek
+ * @version 1.0
+ */
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
@@ -14,9 +18,9 @@ public class Tile extends Rectangle {
     /**
      * Constructor to set color and (x,y) location of a Tile
      *
-     * @param backgroundColor
-     * @param x
-     * @param y
+     * @param backgroundColor which was a boolean representation of which color the Tile is true for black, false for white
+     * @param x represents the x-axis location of the tile
+     * @param y represents the y-axis location of the tile
      */
     public Tile(boolean backgroundColor, int x, int y) {
         setWidth(SIZEOFTILES);
@@ -45,6 +49,7 @@ public class Tile extends Rectangle {
     }
 
     /**
+     * Confirms whether the Tile has a piece
      * @return true if Tile has a piece, false otherwise
      */
     boolean hasPiece() {
@@ -81,7 +86,7 @@ public class Tile extends Rectangle {
     /**
      * Setter for piece
      *
-     * @param piece
+     * @param piece the current PlayPiece on the current Tile
      */
     public void setPiece(PlayPiece piece) {
         this.piece = piece;
