@@ -18,13 +18,16 @@ public class Checkers extends Application {
     static PlayPiece previousPiece = null;
     static boolean isPieceSelected = false;
     static PlayPiece pieceSelected;
+    static PlayPiece previousPieceSelected;
     static Tile tileClicked;
 
     static Tile[][] board = new Tile[NUMCOLUMNS][NUMROWS];
     static Group tiles = new Group();
     static Group pieces = new Group();
 
-
+    /*
+     * Creates the Game Board Window and sets up the PlayPieces
+     */
     private Parent createBoard() {
         Pane window = new Pane();
         window.setPrefSize(NUMCOLUMNS * SIZEOFTILES,NUMROWS * SIZEOFTILES);
@@ -37,16 +40,26 @@ public class Checkers extends Application {
         }
         return window;
     }
-
+    
+ 
     @Override
+    /*
+     * Sets up the game
+     * @param primaryStage is the stage for the window
+     */
     public void start(Stage primaryStage) {
         Scene scene = new Scene(createBoard());
         primaryStage.setTitle("Checkers");
         primaryStage.setScene(scene);
         primaryStage.show();
     }
-
-    static void pieceAction() {
+    
+    /*
+     * Performs a pieceAction as long as the current piece selected is not the previousPieceType
+     * @return boolean whether an attack was made.
+     */
+    static boolean pieceAction() {
+    	previousPieceSelected = pieceSelected;
         if (isPieceSelected && pieceSelected.getType() != previousPieceType) {
             int oldX = pieceSelected.getPieceX();
             int oldY = pieceSelected.getPieceY();
@@ -55,11 +68,14 @@ public class Checkers extends Application {
 
             if (Math.abs(newX - oldX) == 1 && (newY - oldY) == pieceSelected.getType().MOVEDIRECTION && !tileClicked.hasPiece()) {
                 movePiece(oldX, oldY, newX, newY);
+                return false;
 
             } else if (Math.abs(newX - oldX) == 2 && (newY - oldY) == 2 * pieceSelected.getType().MOVEDIRECTION && !tileClicked.hasPiece()) {
                 attackingPieceMove(oldX, oldY, newX, newY);
+                return true;
             }
         }
+        return false;
     }
 
 
