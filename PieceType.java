@@ -5,7 +5,7 @@ package application;
  * @version 1.0
  */
 public enum PieceType {
-    RED(1), WHITE(-1);
+    REDKING(2), RED(1), BLUE(-1), BLUEKING(-2);
 
     final int MOVEDIRECTION;
 
