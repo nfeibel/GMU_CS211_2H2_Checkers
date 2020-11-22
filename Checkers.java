@@ -78,11 +78,12 @@ public class Checkers extends Application {
                 attackingPieceMove(oldX, oldY, newX, newY);
                 return true;
             }
-            if(pieceSelected.getType() == PieceType.RED && newY == 7){
-            	pieceSelected.setType(PieceType.REDKING);
+            if(pieceSelected.getType() == PieceType.RED && newY == 8){
+            	pieceSelected = new PlayPiece(PieceType.REDKING, newX,newY);
             }
-            else if(pieceSelected.getType() == PieceType.BLUE && newY == 0){
-            	pieceSelected.setType(PieceType.BLUEKING);
+            else if(pieceSelected.getType() == PieceType.BLUE && newY == 1){
+            	pieceSelected = new PlayPiece(PieceType.BLUEKING, newX,newY);
+            	previousPieceSelected = pieceSelected;
             }
         }
         return false;
