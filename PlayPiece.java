@@ -114,8 +114,14 @@ public class PlayPiece extends StackPane {
         if(type == PieceType.RED){
             ellipse.setFill(Color.RED);
         }
-        else{
+        else if(type == PieceType.BLUE){
             ellipse.setFill(Color.BLUE);
+        }
+        else if(type == PieceType.REDKING){
+        	ellipse.setFill(Color.DARKRED);
+        }
+        else{
+        	ellipse.setFill(Color.DARKBLUE);
         }
         ellipse.setStroke(Color.BLACK);
         ellipse.setStrokeWidth(SIZEOFTILES * 0.03);
