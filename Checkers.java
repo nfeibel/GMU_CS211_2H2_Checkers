@@ -44,8 +44,8 @@ public class Checkers extends Application {
         }
         return window;
     }
-    
- 
+
+
     @Override
     /**
      * Sets up the game
@@ -57,7 +57,7 @@ public class Checkers extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
     }
-    
+
     /**
      * Performs a pieceAction as long as the current piece selected is not the previousPieceType
      * @return boolean whether an attack was made.
@@ -77,6 +77,12 @@ public class Checkers extends Application {
             } else if (Math.abs(newX - oldX) == 2 && (newY - oldY) == 2 * pieceSelected.getType().MOVEDIRECTION && !tileClicked.hasPiece()) {
                 attackingPieceMove(oldX, oldY, newX, newY);
                 return true;
+            }
+            if(pieceSelected.getType() == PieceType.RED && newY == 7){
+            	pieceSelected.setType(PieceType.REDKING);
+            }
+            else if(pieceSelected.getType() == PieceType.BLUE && newY == 0){
+            	pieceSelected.setType(PieceType.BLUEKING);
             }
         }
         return false;
