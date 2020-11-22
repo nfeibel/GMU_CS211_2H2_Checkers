@@ -1,3 +1,4 @@
+package application;
 /**
  * Represents a PlayPiece in a Checkers Game
  * @author Nick Feibel, Ember Ipek
@@ -6,6 +7,8 @@
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Ellipse;
+
+import static application.Checkers.*;
 
 public class PlayPiece extends StackPane {
 
@@ -17,7 +20,7 @@ public class PlayPiece extends StackPane {
 
     /**
      * Constructor for PlayPiece
-     * 
+     *
      * @param type represents the type of Piece this PlayPiece is
      * @param xLocation is the location on the x-axis for this PlayPiece
      * @param yLocation is the location on the y-axis for this PlayPiece
@@ -92,7 +95,7 @@ public class PlayPiece extends StackPane {
             piece = new PlayPiece(PieceType.RED, x, y);
         }
         if (y >= 5 && (x + y) % 2 != 0) {
-            piece = new PlayPiece(PieceType.WHITE, x, y);
+            piece = new PlayPiece(PieceType.BLUE, x, y);
         }
 
         if (piece != null) {
@@ -200,5 +203,13 @@ public class PlayPiece extends StackPane {
      */
     public PieceType getType() {
         return type;
+    }
+    /**
+     * setter for the type of PlayPiece
+     *
+     * @param type
+     */
+    public void setType(PieceType type) {
+        this.type = type;
     }
 }
