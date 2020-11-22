@@ -62,7 +62,7 @@ public class Checkers extends Application {
      * Performs a pieceAction as long as the current piece selected is not the previousPieceType
      * @return boolean whether an attack was made.
      */
-    static boolean pieceAction() {
+    static void pieceAction() {
     	previousPieceSelected = pieceSelected;
         if (isPieceSelected && pieceSelected.getType() != previousPieceType) {
             int oldX = pieceSelected.getPieceX();
@@ -72,21 +72,21 @@ public class Checkers extends Application {
 
             if (Math.abs(newX - oldX) == 1 && (newY - oldY) == pieceSelected.getType().MOVEDIRECTION && !tileClicked.hasPiece()) {
                 movePiece(oldX, oldY, newX, newY);
-                return false;
+//                return false;
 
             } else if (Math.abs(newX - oldX) == 2 && (newY - oldY) == 2 * pieceSelected.getType().MOVEDIRECTION && !tileClicked.hasPiece()) {
                 attackingPieceMove(oldX, oldY, newX, newY);
-                return true;
+//                return true;
             }
-            if(pieceSelected.getType() == PieceType.RED && newY == 8){
+            if(pieceSelected.getType() == PieceType.RED && newY == 7){
             	pieceSelected = new PlayPiece(PieceType.REDKING, newX,newY);
             }
-            else if(pieceSelected.getType() == PieceType.BLUE && newY == 1){
+            else if(pieceSelected.getType() == PieceType.BLUE && newY == 0){
             	pieceSelected = new PlayPiece(PieceType.BLUEKING, newX,newY);
             	previousPieceSelected = pieceSelected;
             }
         }
-        return false;
+//        return false;
     }
 
 
