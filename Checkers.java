@@ -18,6 +18,8 @@ public class Checkers extends Application {
     public static final int SIZEOFTILES = 100;
     private static final int NUMCOLUMNS = 8;
     private static final int NUMROWS = 8;
+    private static int redWins = 0;
+    private static int blueWins = 0;
     static PieceType previousPieceType = PieceType.RED;
     static PlayPiece previousPiece = null;
     static boolean isPieceSelected = false;
@@ -36,7 +38,14 @@ public class Checkers extends Application {
         Pane window = new Pane();
         window.setPrefSize(NUMCOLUMNS * SIZEOFTILES,NUMROWS * SIZEOFTILES);
         window.getChildren().addAll(tiles,pieces);
-
+        Text redText = new Text(1,(NUMROWS+1) * SIZEOFTILES-5, "Red Score: "+String.valueOf(redWins));
+        redText.setFill(Color.RED);
+        redText.setFont(Font.font("Verdana", FontWeight.BOLD,50));
+        Text blueText = new Text(NUMCOLUMNS/2 * SIZEOFTILES+1,(NUMROWS+1) * SIZEOFTILES-5, "Blue Score: "+String.valueOf(blueWins));
+        blueText.setFill(Color.BLUE);
+        blueText.setFont(Font.font("Verdana", FontWeight.BOLD,50));
+        window.getChildren().add(redText);
+        window.getChildren().add(blueText);
         for (int y = 0; y < NUMCOLUMNS; y++) {
             for (int x = 0; x < NUMROWS; x++) {
                 PlayPiece.setPiecePosition(x, y);
