@@ -161,7 +161,7 @@ public class PlayPiece extends StackPane {
     private void pieceActionOnMouseClicked() {
         this.setOnMouseClicked(e -> {
             PlayPiece tempPiece = (PlayPiece) e.getSource();
-            if (tempPiece.getType() != previousPieceType && tempPiece != previousPiece) {
+            if (tempPiece.getType().MOVEDIRECTION*previousPieceType.MOVEDIRECTION<0 && tempPiece != previousPiece) {
             	pieceSelected = tempPiece;
                 isPieceSelected = true;
                 pieceSelected.setOpacity(0.5);
@@ -225,5 +225,12 @@ public class PlayPiece extends StackPane {
      */
     public void setType(PieceType type) {
         this.type = type;
+    }
+
+    public boolean samePiece(PlayPiece otherPiece){
+    	if(this.xLocation == otherPiece.getPieceX() && this.yLocation == otherPiece.getPieceY()){
+    		return true;
+    	}
+    	return false;
     }
 }
