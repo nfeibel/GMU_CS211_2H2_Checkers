@@ -132,6 +132,10 @@ public class Checkers extends Application {
         }
     }
 
+    /**
+     * Checks whether the game is over, which is confirmed by both players selecting the End Game button.
+     * If the game is ended, the winner is confirmed, or a tie is confirmed.
+     */
     private static void isItOver(){
     	if(endGameSelected){
 			Rectangle done = new Rectangle(0,0, SIZEOFTILES*(NUMROWS*2),SIZEOFTILES*(NUMCOLUMNS*2));
