@@ -75,6 +75,14 @@ public class PlayPiece extends StackPane {
                 board[yPieceAttacked][xPieceAttacked].setPiece(null);
                 pieces.getChildren().remove(pieceAttacked);
                 movePiece(oldXLocation, oldYLocation, newXLocation, newYLocation);
+                if(pieceSelected.getType() == PieceType.RED || pieceSelected.getType() == PieceType.REDKING){
+                	redWins++;
+                	Checkers.updateScore();
+                }
+                else{
+                	blueWins++;
+                	Checkers.updateScore();
+                }
             }
         }
     }
