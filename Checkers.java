@@ -31,6 +31,7 @@ public class Checkers extends Application {
     static PlayPiece previousPiece = null;
     static boolean isPieceSelected = false;
     static boolean endGameSelected = false;
+    static boolean pieceAttacked = false;
     static PlayPiece pieceSelected;
     static PlayPiece previousPieceSelected;
     static Tile tileClicked;
@@ -115,7 +116,7 @@ public class Checkers extends Application {
                 endGameSelected =false;
 
             } else if (Math.abs(newX - oldX) == 2 && ((newY - oldY) == 2 * pieceSelected.getType().MOVEDIRECTION || pieceSelected.getType()==PieceType.REDKING || pieceSelected.getType()==PieceType.BLUEKING) && !tileClicked.hasPiece()) {
-                attackingPieceMove(oldX, oldY, newX, newY);
+            	attackingPieceMove(oldX, oldY, newX, newY);
                 endGameSelected =false;
             }
             if(pieceSelected.getType() == PieceType.RED && newY == 7){
