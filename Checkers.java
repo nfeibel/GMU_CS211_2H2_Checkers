@@ -44,8 +44,8 @@ public class Checkers extends Application {
     //endGameSelected confirms whether the previous player selected the End Game button
     static boolean endGameSelected = false;
 
-    //pieceAttacked confirms whether a piece was attacked during the previous turn
-    static boolean pieceAttacked = false;
+    //pieceWasAttacked confirms whether a piece was attacked during the previous turn
+    static boolean pieceWasAttacked = false;
 
     //firstTurn confirms whether it is the first turn of the game
     static boolean firstTurn = true;
@@ -145,7 +145,7 @@ public class Checkers extends Application {
 
     	//Below it is checked whether the piece selected is an allowed piece to be selected.
     	//firstTurn being true allows either red or blue pieces to be selected.
-        if (isPieceSelected && ((pieceSelected.getType() != previousPieceType || pieceWasAttacked) || firstTurn)) {
+        if (isPieceSelected && ((pieceSelected.getType() != previousPieceType || (pieceWasAttacked && pieceSelected.samePiece(previousPieceSelected))) || firstTurn)) {
             int oldX = pieceSelected.getPieceX();
             int oldY = pieceSelected.getPieceY();
             int newX = tileClicked.getTileX();
@@ -177,6 +177,10 @@ public class Checkers extends Application {
             	endGameSelected =false;
             }
             previousPieceSelected = pieceSelected;
+
+            //Opacity for pieces set to 1.0 after actions are made
+            previousPiece.setOpacity(1.0);
+            previousPieceSelected.setOpacity(1.0);
         }
 
     }
