@@ -12,7 +12,7 @@ import static application.Checkers.*;
 
 public class PlayPiece extends StackPane {
 
-	//ELLIPSE_RADIUS_X and ELLIPSE_RADIUS_Y are the size of the ellipse's radius' in the x and y directions
+    //ELLIPSE_RADIUS_X and ELLIPSE_RADIUS_Y are the size of the ellipse's radius' in the x and y directions
     private final double ELLIPSE_RADIUS_X = 0.3;
     private final double ELLIPSE_RADIUS_Y = 0.28;
 
@@ -93,7 +93,7 @@ public class PlayPiece extends StackPane {
         //Checks if the board has a PlayPiece on its Tile
         if (board[yPieceAttacked][xPieceAttacked].hasPiece()) {
 
-        	//If there is a PlayPiece on the tile, it can be checked for removal
+            //If there is a PlayPiece on the tile, it can be checked for removal
             PlayPiece pieceAttacked = board[yPieceAttacked][xPieceAttacked].getPiece();
 
             //If the current PlayPiece is not the same color as the pieceAttacked, it can be removed.
@@ -215,7 +215,7 @@ public class PlayPiece extends StackPane {
     	//Creates a new MouseEvent for when the mouse is clicked on the PlayPiece
         this.setOnMouseClicked(e -> {
 
-        	//A tempPiece is set to the current PlayPiece that was clicked
+            //A tempPiece is set to the current PlayPiece that was clicked
             PlayPiece tempPiece = (PlayPiece) e.getSource();
 
             //If else if statement checks whether the piece is a legal piece to select and if so
