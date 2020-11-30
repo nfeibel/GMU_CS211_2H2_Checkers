@@ -160,8 +160,6 @@ public class Checkers extends Application {
      */
     static void pieceAction() {
 
-
-
     	//Below it is checked whether the piece selected is an allowed piece to be selected.
     	//firstTurn being true allows either red or blue pieces to be selected.
         if (isPieceSelected && ((pieceSelected.getType() != previousPieceType || (pieceWasAttacked && pieceSelected.samePiece(previousPieceSelected))) || firstTurn)) {
@@ -224,6 +222,7 @@ public class Checkers extends Application {
      * If the game is over, this method triggers to draw the conclusion screen displaying the winner, or tie.
      */
     private static void itIsOver(){
+	    
     	//If the endGame button was clicked twice, the end game screen will be setup using the below
 		Rectangle done = new Rectangle(0,0, SIZEOFTILES*(NUMROWS*2),SIZEOFTILES*(NUMCOLUMNS*2));
 		done.setFill(Color.BLACK);
