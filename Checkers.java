@@ -22,26 +22,52 @@ import static application.PlayPiece.*;
 
 public class Checkers extends Application {
 
+	//SIZEOFTILES represents the size of the tiles in pixels
+	//NUMCOLUMNS and NUMROWS represents the size of the game board
     public static final int SIZEOFTILES = 100;
     public static final int NUMCOLUMNS = 8;
     public static final int NUMROWS = 8;
+
+    //redWins and blueWins tracks the amount of captured pieces
     static int redWins = 0;
     static int blueWins = 0;
-    static PieceType previousPieceType = PieceType.RED;
+
+    //previousPieceType and previousPiece track the previousPiece moved and its type
+    //previousPieceSelected is the previous PlayPiece that was selected
+    static PieceType previousPieceType = null;
     static PlayPiece previousPiece = null;
-    static boolean isPieceSelected = false;
-    static boolean endGameSelected = false;
-    static boolean pieceAttacked = false;
-    static boolean firstTurn = true;
-    static PlayPiece pieceSelected;
     static PlayPiece previousPieceSelected;
+
+    //isPieceSelected confirms whether a piece is being selected
+    static boolean isPieceSelected = false;
+
+    //endGameSelected confirms whether the previous player selected the End Game button
+    static boolean endGameSelected = false;
+
+    //pieceAttacked confirms whether a piece was attacked during the previous turn
+    static boolean pieceAttacked = false;
+
+    //firstTurn confirms whether it is the first turn of the game
+    static boolean firstTurn = true;
+
+    //pieceSelected confirms the current piece selected
+    //tileClicked confirms the current tile that was selected
+    static PlayPiece pieceSelected;
     static Tile tileClicked;
+
+    //window is the Pane that the Checkers game plays on
+    //endGame is the Button that the players can select to end the game
     private static Pane window;
     private static Button endGame;
+
+    //redText and blueText are the score text provided at the bottom of the game
     static Text redText;
     static Text blueText;
 
+    //board is the playing board represented as a 2D array
     static Tile[][] board = new Tile[NUMCOLUMNS][NUMROWS];
+
+    //tiles and pieces are the Group of tiles and pieces to be added to the window
     static Group tiles = new Group();
     static Group pieces = new Group();
 
@@ -49,6 +75,8 @@ public class Checkers extends Application {
      * Creates the Pane window which represents a Game Board and sets up the PlayPieces
      */
     private Parent createBoard() {
+
+    	//Below the window is setup with all the tiles and the endGame button
         window = new Pane();
         window.setPrefSize(NUMCOLUMNS * SIZEOFTILES,(NUMROWS+2) * SIZEOFTILES);
         window.getChildren().addAll(tiles,pieces);
@@ -57,6 +85,8 @@ public class Checkers extends Application {
         endGame.setTranslateX(NUMCOLUMNS/2.3 * SIZEOFTILES+1);
         endGame.setTranslateY((NUMROWS+1.5) * SIZEOFTILES-5);
         window.getChildren().addAll(endGame);
+
+        //Then the PlayPieces positions confirmed for the board
         for (int y = 0; y < NUMCOLUMNS; y++) {
             for (int x = 0; x < NUMROWS; x++) {
                 PlayPiece.setPiecePosition(x, y);
@@ -70,10 +100,15 @@ public class Checkers extends Application {
      * Updates the Pane window with the updated score count
      */
     public static void updateScore(){
-    	if(redWins != 0 || blueWins != 0){
+
+    	//If it is not the firstTurn, the redText and blueText needs to be removed to be updated
+    	//without numbers overlaying eachother
+    	if(!firstTurn){
     		window.getChildren().remove(redText);
     		window.getChildren().remove(blueText);
     	}
+
+    	//redText and blueText setup respectively below and added back to the windo
     	redText = new Text(1,(NUMROWS+1) * SIZEOFTILES-5, "Red Score: "+String.valueOf(redWins));
         redText.setFill(Color.RED);
         redText.setFont(Font.font("Verdana", FontWeight.BOLD,50));
@@ -102,17 +137,23 @@ public class Checkers extends Application {
      * @return boolean whether an attack was made.
      */
     static void pieceAction() {
+
+    	//First it is checked whether the endGame button was selected and if so, runs isItOver() method
     	endGame.setOnAction(e -> {
     		isItOver();
     	});
-    	
+
+    	//Below it is checked whether the piece selected is an allowed piece to be selected.
+    	//firstTurn being true allows either red or blue pieces to be selected.
         if (isPieceSelected && ((pieceSelected.getType() != previousPieceType || pieceWasAttacked) || firstTurn)) {
             int oldX = pieceSelected.getPieceX();
             int oldY = pieceSelected.getPieceY();
             int newX = tileClicked.getTileX();
             int newY = tileClicked.getTileY();
 
-            if (firstTurn || (Math.abs(newX - oldX) == 1 && ((newY - oldY) == pieceSelected.getType().MOVEDIRECTION || pieceSelected.getType()==PieceType.REDKING || pieceSelected.getType()==PieceType.BLUEKING)  && !tileClicked.hasPiece() && !pieceSelected.samePiece(previousPieceSelected))){
+            //Below it is checked whether the player moves or attacks another piece using the pieceSelected.
+            //If neither, nothing occurs until a legal option is made by the player.
+            if ((Math.abs(newX - oldX) == 1 && firstTurn) || (Math.abs(newX - oldX) == 1 && ((newY - oldY) == pieceSelected.getType().MOVEDIRECTION || pieceSelected.getType()==PieceType.REDKING || pieceSelected.getType()==PieceType.BLUEKING)  && !tileClicked.hasPiece() && !pieceSelected.samePiece(previousPieceSelected))){
                 firstTurn = false;
             	pieceWasAttacked = false;
             	movePiece(oldX, oldY, newX, newY);
@@ -122,6 +163,9 @@ public class Checkers extends Application {
             	attackingPieceMove(oldX, oldY, newX, newY);
                 endGameSelected =false;
             }
+
+            //Below it is checked whether any piece reached the end of the board which allows it to
+            //become a king piece. This allows the piece to move in either positive or negative MOVEDIRECTION.
             if(pieceSelected.getType() == PieceType.RED && newY == 7){
             	pieces.getChildren().remove(pieceSelected);
             	pieces.getChildren().add(new PlayPiece(PieceType.REDKING, newX,newY));
@@ -134,7 +178,7 @@ public class Checkers extends Application {
             }
             previousPieceSelected = pieceSelected;
         }
-        
+
     }
 
     /**
@@ -142,10 +186,18 @@ public class Checkers extends Application {
      * If the game is ended, the winner is confirmed, or a tie is confirmed.
      */
     private static void isItOver(){
+
+    	//Below it is checked whether the endGame button was selected during the current turn, if not
+    	//it confirms a player initiated the End Game option and allows the other player to press it.
     	if(endGameSelected){
+
+    		//If the endGame button was clicked twice, the end game screen will be setup using the below
 			Rectangle done = new Rectangle(0,0, SIZEOFTILES*(NUMROWS*2),SIZEOFTILES*(NUMCOLUMNS*2));
 			done.setFill(Color.BLACK);
 			window.getChildren().add(done);
+
+			//If statement checks for who the winner is, and depending on who wins, or whether it is a tie,
+			//displays the results on the screen.
 			if(redWins>blueWins){
 				Text winText1 = new Text(SIZEOFTILES*(NUMCOLUMNS/2.7), SIZEOFTILES*4, "RED");
 				Text winText2 = new Text(SIZEOFTILES*(NUMCOLUMNS/2.99), SIZEOFTILES*5, "WINS");
