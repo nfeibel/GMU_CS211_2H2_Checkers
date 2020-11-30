@@ -32,6 +32,7 @@ public class Checkers extends Application {
     static boolean isPieceSelected = false;
     static boolean endGameSelected = false;
     static boolean pieceAttacked = false;
+    static boolean firstTurn = true;
     static PlayPiece pieceSelected;
     static PlayPiece previousPieceSelected;
     static Tile tileClicked;
@@ -104,15 +105,17 @@ public class Checkers extends Application {
     	endGame.setOnAction(e -> {
     		isItOver();
     	});
-    	previousPieceSelected = pieceSelected;
-        if (isPieceSelected && pieceSelected.getType() != previousPieceType) {
+    	
+        if (isPieceSelected && ((pieceSelected.getType() != previousPieceType || pieceWasAttacked) || firstTurn)) {
             int oldX = pieceSelected.getPieceX();
             int oldY = pieceSelected.getPieceY();
             int newX = tileClicked.getTileX();
             int newY = tileClicked.getTileY();
 
-            if (Math.abs(newX - oldX) == 1 && ((newY - oldY) == pieceSelected.getType().MOVEDIRECTION || pieceSelected.getType()==PieceType.REDKING || pieceSelected.getType()==PieceType.BLUEKING)  && !tileClicked.hasPiece()) {
-                movePiece(oldX, oldY, newX, newY);
+            if (firstTurn || (Math.abs(newX - oldX) == 1 && ((newY - oldY) == pieceSelected.getType().MOVEDIRECTION || pieceSelected.getType()==PieceType.REDKING || pieceSelected.getType()==PieceType.BLUEKING)  && !tileClicked.hasPiece() && !pieceSelected.samePiece(previousPieceSelected))){
+                firstTurn = false;
+            	pieceWasAttacked = false;
+            	movePiece(oldX, oldY, newX, newY);
                 endGameSelected =false;
 
             } else if (Math.abs(newX - oldX) == 2 && ((newY - oldY) == 2 * pieceSelected.getType().MOVEDIRECTION || pieceSelected.getType()==PieceType.REDKING || pieceSelected.getType()==PieceType.BLUEKING) && !tileClicked.hasPiece()) {
@@ -129,7 +132,9 @@ public class Checkers extends Application {
             	pieces.getChildren().add(new PlayPiece(PieceType.BLUEKING, newX,newY));
             	endGameSelected =false;
             }
+            previousPieceSelected = pieceSelected;
         }
+        
     }
 
     /**
