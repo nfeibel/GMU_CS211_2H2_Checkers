@@ -2,7 +2,7 @@ package application;
 /**
  * Represents the Types of Pieces
  * @author Nick Feibel, Ember Ipek
- * @version 1.0
+ * @version 1.5
  */
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -23,18 +23,26 @@ public class Tile extends Rectangle {
      * @param y represents the y-axis location of the tile
      */
     public Tile(boolean backgroundColor, int x, int y) {
+
+    	//Sets the Tile's width and height using the Rectangle's methods
         setWidth(SIZEOFTILES);
         setHeight(SIZEOFTILES);
         this.x = x;
         this.y = y;
 
+        //Sets the position for the Tile
         relocate(x * SIZEOFTILES, y * SIZEOFTILES);
+
+        //If statement sets the fill based on which backgroundColor value is true or false, allowing
+        //for an alternating checkerboard pattern for the board.
         if(backgroundColor){
             setFill(Color.BLACK);
         }
         else{
             setFill(Color.WHITE);
         }
+
+        //Prime the Tile for an action when clicked on
         setTileAction();
     }
 
@@ -42,6 +50,9 @@ public class Tile extends Rectangle {
      * Sets how the new Tile should look
      */
     private void setTileAction(){
+
+    	//When the Tile is clicked, it confirms the source and proceeds with the pieceAction() method
+    	//in PlayPiece to allow for a player action.
         setOnMouseClicked(e -> {
             tileClicked = (Tile) e.getSource();
             pieceAction();
