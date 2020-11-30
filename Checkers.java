@@ -117,13 +117,17 @@ public class Checkers extends Application {
     		window.getChildren().remove(blueText);
     	}
 
-    	//redText and blueText setup respectively below and added back to the windo
+    	//redText and blueText setup respectively below and added back to the window
     	redText = new Text(1,(NUMROWS+1) * SIZEOFTILES-5, "Red Score: "+String.valueOf(redWins));
         redText.setFill(Color.RED);
         redText.setFont(Font.font("Verdana", FontWeight.BOLD,50));
         blueText = new Text(NUMCOLUMNS/2 * SIZEOFTILES+1,(NUMROWS+1) * SIZEOFTILES-5, "Blue Score: "+String.valueOf(blueWins));
         blueText.setFill(Color.BLUE);
         blueText.setFont(Font.font("Verdana", FontWeight.BOLD,50));
+    	redText.setStroke(Color.BLACK);
+        redText.setStrokeWidth(SIZEOFTILES * 0.015);
+        blueText.setStroke(Color.BLACK);
+        blueText.setStrokeWidth(SIZEOFTILES * 0.015);
         window.getChildren().add(redText);
         window.getChildren().add(blueText);
     }
@@ -202,70 +206,88 @@ public class Checkers extends Application {
 
     /**
      * Checks whether the game is over, which is confirmed by both players selecting the End Game button.
-     * If the game is ended, the winner is confirmed, or a tie is confirmed.
      */
     private static void isItOver(){
 
     	//Below it is checked whether the endGame button was selected during the current turn, if not
     	//it confirms a player initiated the End Game option and allows the other player to press it.
+    	//This will initiate the itIsOver() method which draws the conclusion screen.
     	if(endGameSelected){
-
-    		//If the endGame button was clicked twice, the end game screen will be setup using the below
-			Rectangle done = new Rectangle(0,0, SIZEOFTILES*(NUMROWS*2),SIZEOFTILES*(NUMCOLUMNS*2));
-			done.setFill(Color.BLACK);
-			window.getChildren().add(done);
-
-			//If statement checks for who the winner is, and depending on who wins, or whether it is a tie,
-			//displays the results on the screen.
-			if(redWins>blueWins){
-				Text winText1 = new Text(SIZEOFTILES*(NUMCOLUMNS/2.7), SIZEOFTILES*4, "RED");
-				Text winText2 = new Text(SIZEOFTILES*(NUMCOLUMNS/2.99), SIZEOFTILES*5, "WINS");
-				winText1.setFont(Font.font("Verdana", FontWeight.BOLD,100));
-				winText2.setFont(Font.font("Verdana", FontWeight.BOLD,100));
-				winText1.setFill(Color.CRIMSON);
-				winText2.setFill(Color.CRIMSON);
-				window.getChildren().add(winText1);
-				window.getChildren().add(winText2);
-			}
-			else if(redWins<blueWins){
-				Text winText1 = new Text(SIZEOFTILES*(NUMCOLUMNS/2.85), SIZEOFTILES*4, "BLUE");
-				Text winText2 = new Text(SIZEOFTILES*(NUMCOLUMNS/2.99), SIZEOFTILES*5, "WINS");
-				winText1.setFont(Font.font("Verdana", FontWeight.BOLD,100));
-				winText2.setFont(Font.font("Verdana", FontWeight.BOLD,100));
-				winText1.setFill(Color.ROYALBLUE);
-				winText2.setFill(Color.ROYALBLUE);
-				window.getChildren().add(winText1);
-				window.getChildren().add(winText2);
-			}
-			else{
-				Text tieText1 = new Text(SIZEOFTILES*(NUMCOLUMNS/2.85), SIZEOFTILES*4, "IT IS");
-				Text tieText2 = new Text(SIZEOFTILES*(NUMCOLUMNS/2.85), SIZEOFTILES*5, "A TIE");
-				tieText1.setTextAlignment(TextAlignment.CENTER);
-				tieText2.setTextAlignment(TextAlignment.CENTER);
-				tieText1.setFill(Color.BURLYWOOD);
-				tieText2.setFill(Color.BURLYWOOD);
-				tieText1.setFont(Font.font("Verdana", FontWeight.BOLD,100));
-				tieText2.setFont(Font.font("Verdana", FontWeight.BOLD,100));
-				window.getChildren().add(tieText1);
-				window.getChildren().add(tieText2);
-			}
-
-			//Button below is setup to allow players to restart the game if they would like to
-			//play another game.
-			Button restart = new Button("Restart?");
-			restart.setTranslateX(NUMCOLUMNS/2.3 * SIZEOFTILES+1);
-			restart.setTranslateY((NUMROWS+1.5) * SIZEOFTILES-5);
-	        window.getChildren().addAll(restart);
-
-	        //Below primes the button to be selected to start the game again
-	        restart.setOnAction(e -> {
-	        	reinitialize();
-	        	startGame(new Stage());
-	    	});
+    		itIsOver();
 		}
 		else{
 			endGameSelected =true;
 		}
+    }
+
+    /**
+     * If the game is over, this method triggers to draw the conclusion screen displaying the winner, or tie.
+     */
+    private static void itIsOver(){
+    	//If the endGame button was clicked twice, the end game screen will be setup using the below
+		Rectangle done = new Rectangle(0,0, SIZEOFTILES*(NUMROWS*2),SIZEOFTILES*(NUMCOLUMNS*2));
+		done.setFill(Color.BLACK);
+		window.getChildren().add(done);
+
+		//If statement checks for who the winner is, and depending on who wins, or whether it is a tie,
+		//displays the results on the screen.
+		if(redWins>blueWins){
+			Text winText1 = new Text(SIZEOFTILES*(NUMCOLUMNS/2.7), SIZEOFTILES*4, "RED");
+			Text winText2 = new Text(SIZEOFTILES*(NUMCOLUMNS/2.99), SIZEOFTILES*5, "WINS");
+			winText1.setFont(Font.font("Verdana", FontWeight.BOLD,100));
+			winText2.setFont(Font.font("Verdana", FontWeight.BOLD,100));
+			winText1.setFill(Color.CRIMSON);
+			winText2.setFill(Color.CRIMSON);
+			winText1.setStroke(Color.RED);
+			winText1.setStrokeWidth(SIZEOFTILES * 0.015);
+			winText2.setStroke(Color.RED);
+			winText2.setStrokeWidth(SIZEOFTILES * 0.015);
+			window.getChildren().add(winText1);
+			window.getChildren().add(winText2);
+		}
+		else if(redWins<blueWins){
+			Text winText1 = new Text(SIZEOFTILES*(NUMCOLUMNS/2.85), SIZEOFTILES*4, "BLUE");
+			Text winText2 = new Text(SIZEOFTILES*(NUMCOLUMNS/2.99), SIZEOFTILES*5, "WINS");
+			winText1.setFont(Font.font("Verdana", FontWeight.BOLD,100));
+			winText2.setFont(Font.font("Verdana", FontWeight.BOLD,100));
+			winText1.setFill(Color.ROYALBLUE);
+			winText2.setFill(Color.ROYALBLUE);
+			winText1.setStroke(Color.BLUE);
+			winText1.setStrokeWidth(SIZEOFTILES * 0.015);
+			winText2.setStroke(Color.BLUE);
+			winText2.setStrokeWidth(SIZEOFTILES * 0.015);
+			window.getChildren().add(winText1);
+			window.getChildren().add(winText2);
+		}
+		else{
+			Text tieText1 = new Text(SIZEOFTILES*(NUMCOLUMNS/2.85), SIZEOFTILES*4, "IT IS");
+			Text tieText2 = new Text(SIZEOFTILES*(NUMCOLUMNS/2.85), SIZEOFTILES*5, "A TIE");
+			tieText1.setTextAlignment(TextAlignment.CENTER);
+			tieText2.setTextAlignment(TextAlignment.CENTER);
+			tieText1.setFill(Color.BURLYWOOD);
+			tieText2.setFill(Color.BURLYWOOD);
+			tieText1.setFont(Font.font("Verdana", FontWeight.BOLD,100));
+			tieText2.setFont(Font.font("Verdana", FontWeight.BOLD,100));
+			tieText1.setStroke(Color.ALICEBLUE);
+			tieText1.setStrokeWidth(SIZEOFTILES * 0.015);
+			tieText2.setStroke(Color.ALICEBLUE);
+			tieText2.setStrokeWidth(SIZEOFTILES * 0.015);
+			window.getChildren().add(tieText1);
+			window.getChildren().add(tieText2);
+		}
+
+		//Button below is setup to allow players to restart the game if they would like to
+		//play another game.
+		Button restart = new Button("Restart?");
+		restart.setTranslateX(NUMCOLUMNS/2.3 * SIZEOFTILES+1);
+		restart.setTranslateY((NUMROWS+1.5) * SIZEOFTILES-5);
+        window.getChildren().addAll(restart);
+
+        //Below primes the button to be selected to start the game again
+        restart.setOnAction(e -> {
+        	reinitialize();
+        	startGame(new Stage());
+    	});
     }
 
     /**
