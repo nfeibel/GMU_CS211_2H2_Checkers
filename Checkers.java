@@ -29,26 +29,26 @@ public class Checkers extends Application {
     public static final int NUMROWS = 8;
 
     //redWins and blueWins tracks the amount of captured pieces
-    static int redWins = 0;
-    static int blueWins = 0;
+    static int redWins;
+    static int blueWins;
 
     //previousPieceType and previousPiece track the previousPiece moved and its type
     //previousPieceSelected is the previous PlayPiece that was selected
-    static PieceType previousPieceType = null;
-    static PlayPiece previousPiece = null;
+    static PieceType previousPieceType;
+    static PlayPiece previousPiece;
     static PlayPiece previousPieceSelected;
 
     //isPieceSelected confirms whether a piece is being selected
-    static boolean isPieceSelected = false;
+    static boolean isPieceSelected;
 
     //endGameSelected confirms whether the previous player selected the End Game button
-    static boolean endGameSelected = false;
+    static boolean endGameSelected;
 
     //pieceWasAttacked confirms whether a piece was attacked during the previous turn
-    static boolean pieceWasAttacked = false;
+    static boolean pieceWasAttacked;
 
     //firstTurn confirms whether it is the first turn of the game
-    static boolean firstTurn = true;
+    static boolean firstTurn;
 
     //pieceSelected confirms the current piece selected
     //tileClicked confirms the current tile that was selected
@@ -65,16 +65,20 @@ public class Checkers extends Application {
     static Text blueText;
 
     //board is the playing board represented as a 2D array
-    static Tile[][] board = new Tile[NUMCOLUMNS][NUMROWS];
+    static Tile[][] board;
 
     //tiles and pieces are the Group of tiles and pieces to be added to the window
-    static Group tiles = new Group();
-    static Group pieces = new Group();
+    static Group tiles;
+    static Group pieces;
 
     /**
      * Creates the Pane window which represents a Game Board and sets up the PlayPieces
      */
-    private Parent createBoard() {
+    private static Parent createBoard() {
+
+    	//Below reinitialize() method call ensures all values are set to default.
+    	//This allows the game to be played repeatedly by the players.
+    	reinitialize();
 
     	//Below the window is setup with all the tiles and the endGame button
         window = new Pane();
@@ -85,6 +89,11 @@ public class Checkers extends Application {
         endGame.setTranslateX(NUMCOLUMNS/2.3 * SIZEOFTILES+1);
         endGame.setTranslateY((NUMROWS+1.5) * SIZEOFTILES-5);
         window.getChildren().addAll(endGame);
+
+        //Is primed and if selected, runs isItOver() method
+    	endGame.setOnAction(e -> {
+    		isItOver();
+    	});
 
         //Then the PlayPieces positions confirmed for the board
         for (int y = 0; y < NUMCOLUMNS; y++) {
@@ -126,22 +135,28 @@ public class Checkers extends Application {
      * @param primaryStage is the stage for the window
      */
     public void start(Stage primaryStage) {
+    	startGame(primaryStage);
+
+    }
+
+    /**
+     * Sets up the game, used to allow the game to be restarted. start() cannot be set to static
+     * based on JavaFX syntax.
+     * @param primaryStage is the stage for the window
+     */
+    public static void startGame(Stage primaryStage){
         Scene scene = new Scene(createBoard());
         primaryStage.setTitle("Checkers");
         primaryStage.setScene(scene);
         primaryStage.show();
     }
-
     /**
      * Performs a pieceAction as long as the current piece selected is not the previousPieceType
      * @return boolean whether an attack was made.
      */
     static void pieceAction() {
 
-    	//First it is checked whether the endGame button was selected and if so, runs isItOver() method
-    	endGame.setOnAction(e -> {
-    		isItOver();
-    	});
+
 
     	//Below it is checked whether the piece selected is an allowed piece to be selected.
     	//firstTurn being true allows either red or blue pieces to be selected.
@@ -234,10 +249,43 @@ public class Checkers extends Application {
 				window.getChildren().add(tieText1);
 				window.getChildren().add(tieText2);
 			}
+
+			//Button below is setup to allow players to restart the game if they would like to
+			//play another game.
+			Button restart = new Button("Restart?");
+			restart.setTranslateX(NUMCOLUMNS/2.3 * SIZEOFTILES+1);
+			restart.setTranslateY((NUMROWS+1.5) * SIZEOFTILES-5);
+	        window.getChildren().addAll(restart);
+
+	        //Below primes the button to be selected to start the game again
+	        restart.setOnAction(e -> {
+	        	reinitialize();
+	        	startGame(new Stage());
+	    	});
 		}
 		else{
 			endGameSelected =true;
 		}
+    }
+
+    /**
+     * Reinitializes all values to default to allow repeat plays of the game.
+     */
+    private static void reinitialize(){
+    	redWins = 0;
+        blueWins = 0;
+        previousPieceType = null;
+        previousPiece = null;
+        previousPieceSelected = null;
+        isPieceSelected = false;
+        endGameSelected = false;
+        pieceWasAttacked = false;
+        firstTurn = true;
+        pieceSelected = null;
+        tileClicked = null;
+        board = new Tile[NUMCOLUMNS][NUMROWS];
+        tiles = new Group();
+        pieces = new Group();
     }
 
     /**
