@@ -17,7 +17,7 @@ public class PlayPiece extends StackPane {
     private PieceType type;
     private int xLocation;
     private int yLocation;
-
+    static boolean pieceWasAttacked =false;
     /**
      * Constructor for PlayPiece
      *
@@ -83,6 +83,7 @@ public class PlayPiece extends StackPane {
                 	blueWins++;
                 	Checkers.updateScore();
                 }
+                pieceWasAttacked = true;
             }
         }
     }
@@ -161,13 +162,23 @@ public class PlayPiece extends StackPane {
     private void pieceActionOnMouseClicked() {
         this.setOnMouseClicked(e -> {
             PlayPiece tempPiece = (PlayPiece) e.getSource();
-            if (tempPiece.getType().MOVEDIRECTION*previousPieceType.MOVEDIRECTION<0 && tempPiece != previousPiece) {
+            if (firstTurn || (tempPiece.getType().MOVEDIRECTION*previousPieceType.MOVEDIRECTION<0)) {
             	pieceSelected = tempPiece;
                 isPieceSelected = true;
                 pieceSelected.setOpacity(0.5);
                 if (previousPiece != null) {
                 	pieceSelected.setOpacity(0.5);
                     previousPiece.setOpacity(1.0);
+                }
+                previousPiece = pieceSelected;
+            }
+            else if(pieceWasAttacked){
+            	pieceSelected = tempPiece;
+                isPieceSelected = true;
+                pieceSelected.setOpacity(0.5);
+                if (previousPiece != null) {
+                	previousPiece.setOpacity(0.5);
+                    //previousPiece.setOpacity(1.0);
                 }
                 previousPiece = pieceSelected;
             }
