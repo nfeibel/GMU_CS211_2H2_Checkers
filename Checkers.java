@@ -2,7 +2,7 @@ package application;
 /**
  * Represents a Checkers Game
  * @author Nick Feibel, Ember Ipek
- * @version 1.0
+ * @version 1.5
  */
 import javafx.application.Application;
 import javafx.scene.Group;
