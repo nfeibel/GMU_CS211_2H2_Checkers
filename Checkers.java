@@ -22,8 +22,8 @@ import static application.PlayPiece.*;
 
 public class Checkers extends Application {
 
-	//SIZEOFTILES represents the size of the tiles in pixels
-	//NUMCOLUMNS and NUMROWS represents the size of the game board
+    //SIZEOFTILES represents the size of the tiles in pixels
+    //NUMCOLUMNS and NUMROWS represents the size of the game board
     public static final int SIZEOFTILES = 100;
     public static final int NUMCOLUMNS = 8;
     public static final int NUMROWS = 8;
@@ -281,7 +281,7 @@ public class Checkers extends Application {
 		Button restart = new Button("Restart?");
 		restart.setTranslateX(NUMCOLUMNS/2.3 * SIZEOFTILES+1);
 		restart.setTranslateY((NUMROWS+1.5) * SIZEOFTILES-5);
-        window.getChildren().addAll(restart);
+                window.getChildren().addAll(restart);
 
         //Below primes the button to be selected to start the game again
         restart.setOnAction(e -> {
