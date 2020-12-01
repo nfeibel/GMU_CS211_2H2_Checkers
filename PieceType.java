@@ -1,6 +1,7 @@
 package application;
 /**
  * Represents the Types of Pieces
+ *
  * @author Nick Feibel, Ember Ipek
  * @version 1.5
  */
