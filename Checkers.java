@@ -1,6 +1,7 @@
 package application;
 /**
  * Represents a Checkers Game
+ *
  * @author Nick Feibel, Ember Ipek
  * @version 1.5
  */
@@ -136,6 +137,7 @@ public class Checkers extends Application {
     @Override
     /**
      * Sets up the game
+     *
      * @param primaryStage is the stage for the window
      */
     public void start(Stage primaryStage) {
@@ -146,6 +148,7 @@ public class Checkers extends Application {
     /**
      * Sets up the game, used to allow the game to be restarted. start() cannot be set to static
      * based on JavaFX syntax.
+     *
      * @param primaryStage is the stage for the window
      */
     public static void startGame(Stage primaryStage){
@@ -156,6 +159,7 @@ public class Checkers extends Application {
     }
     /**
      * Performs a pieceAction as long as the current piece selected is not the previousPieceType
+     *
      * @return boolean whether an attack was made.
      */
     static void pieceAction() {
