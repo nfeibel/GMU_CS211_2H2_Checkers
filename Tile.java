@@ -61,6 +61,7 @@ public class Tile extends Rectangle {
 
     /**
      * Confirms whether the Tile has a piece
+     *
      * @return true if Tile has a piece, false otherwise
      */
     boolean hasPiece() {
