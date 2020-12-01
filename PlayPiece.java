@@ -291,14 +291,20 @@ public class PlayPiece extends StackPane {
         return type;
     }
     /**
-     * setter for the type of PlayPiece
+     * Setter for the type of PlayPiece
      *
      * @param type
      */
     public void setType(PieceType type) {
         this.type = type;
     }
-
+    
+    /**
+     * Checks whether a PlayPiece is the same as another Piece
+     *
+     * @param otherPiece is the other PlayPiece to compare this PlayPiece with
+     * @return boolean of whether it is the same PlayPiece
+     */
     public boolean samePiece(PlayPiece otherPiece){
     	if(this.xLocation == otherPiece.getPieceX() && this.yLocation == otherPiece.getPieceY()){
     		return true;
