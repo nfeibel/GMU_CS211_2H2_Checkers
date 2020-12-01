@@ -1,6 +1,7 @@
 package application;
 /**
  * Represents a PlayPiece in a Checkers Game
+ *
  * @author Nick Feibel, Ember Ipek
  * @version 1.5
  */
